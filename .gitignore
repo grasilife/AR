@@ -1,2 +1,4 @@
 out
 workspace.xml
+ARPlugin/gen
+ARPlugin/local.properties
