@@ -29,10 +29,18 @@ import org.geometerplus.android.fbreader.api.PluginApi;
 public class PluginInfo extends PluginApi.PluginInfo {
     @Override
     protected List<PluginApi.ActionInfo> implementedActions(Context context) {
-        return Collections.<PluginApi.ActionInfo>singletonList(new PluginApi.MenuActionInfo(
-                Uri.parse("http://data.ar.org/plugin/ar"),
+        List<PluginApi.ActionInfo> actions = new ArrayList<PluginApi.ActionInfo>(2);
+        actions.add(new PluginApi.MenuActionInfo(
+                Uri.parse("http://data.ar.org/plugin/ar/navigate/to/audio"),
                 "Navigate to audio",
                 Integer.MAX_VALUE
         ));
+        actions.add(new PluginApi.MenuActionInfo(
+                Uri.parse("http://data.ar.org/plugin/ar/navigate/from/audio"),
+                "Navigate from audio",
+                Integer.MAX_VALUE
+        ));
+
+        return actions;
     }
 }

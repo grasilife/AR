@@ -9,7 +9,7 @@ import org.geometerplus.android.fbreader.api.ApiClientImplementation;
 import org.geometerplus.android.fbreader.api.ApiException;
 import org.geometerplus.android.fbreader.api.TextPosition;
 
-public class MainArActivity extends Activity implements ApiClientImplementation.ConnectionListener {
+public class NavigateFromAudioAction extends Activity implements ApiClientImplementation.ConnectionListener {
     private ApiClientImplementation myApi;
 
     @Override
@@ -17,6 +17,8 @@ public class MainArActivity extends Activity implements ApiClientImplementation.
         super.onCreate(savedInstanceState);
 
         myApi = new ApiClientImplementation(this, this);
+
+        finish();
     }
 
     @Override
@@ -32,8 +34,9 @@ public class MainArActivity extends Activity implements ApiClientImplementation.
     }
 
     public void onConnected() {
+        System.out.println("from audio pressed");
         try {
-            myApi.setPageStart(new TextPosition(55, 0, 0));
+            myApi.setPageStart(new TextPosition(100, 0, 0));
             startService(new Intent(PowerampAPI.ACTION_API_COMMAND).putExtra(PowerampAPI.COMMAND, PowerampAPI.Commands.TOGGLE_PLAY_PAUSE));
         } catch (ApiException e) {
             showErrorMessage(e.getMessage(), false);
@@ -46,7 +49,7 @@ public class MainArActivity extends Activity implements ApiClientImplementation.
                 if (fatal) {
                     setTitle("FATAL ERROR");
                 }
-                Toast.makeText(MainArActivity.this, text, Toast.LENGTH_SHORT).show();
+                Toast.makeText(NavigateFromAudioAction.this, text, Toast.LENGTH_SHORT).show();
             }
         });
     }
