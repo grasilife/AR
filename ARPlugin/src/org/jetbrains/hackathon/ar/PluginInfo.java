@@ -19,16 +19,30 @@
 
 package org.jetbrains.hackathon.ar;
 
-import java.util.*;
-
-import android.content.*;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
-
+import com.maxmpz.poweramp.player.RemoteTrackTime;
 import org.geometerplus.android.fbreader.api.PluginApi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PluginInfo extends PluginApi.PluginInfo {
+    private RemoteTrackTime mRemoteTrackTime;
+
+
+
     @Override
     protected List<PluginApi.ActionInfo> implementedActions(Context context) {
+        System.out.println("started");
+
+        Intent intent = new Intent(context, PowerampListener.class);
+//        ComponentName componentName = context.startService(intent);
+//        System.out.println("service " + componentName);
+
+
         List<PluginApi.ActionInfo> actions = new ArrayList<PluginApi.ActionInfo>(2);
         actions.add(new PluginApi.MenuActionInfo(
                 Uri.parse("http://data.ar.org/plugin/ar/navigate/to/audio"),

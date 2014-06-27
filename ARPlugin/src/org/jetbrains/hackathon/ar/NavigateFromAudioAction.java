@@ -2,7 +2,9 @@ package org.jetbrains.hackathon.ar;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.widget.Toast;
 import com.maxmpz.poweramp.player.PowerampAPI;
 import org.geometerplus.android.fbreader.api.ApiClientImplementation;
@@ -35,9 +37,14 @@ public class NavigateFromAudioAction extends Activity implements ApiClientImplem
 
     public void onConnected() {
         System.out.println("from audio pressed");
+        Intent intent = new Intent(getApplicationContext(), PowerampActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getApplicationContext().startActivity(intent);
         try {
             myApi.setPageStart(new TextPosition(100, 0, 0));
-            startService(new Intent(PowerampAPI.ACTION_API_COMMAND).putExtra(PowerampAPI.COMMAND, PowerampAPI.Commands.TOGGLE_PLAY_PAUSE));
+            startService(new Intent(PowerampAPI.ACTION_API_COMMAND)
+                    .putExtra(PowerampAPI.COMMAND, PowerampAPI.Commands.PAUSE));
+
         } catch (ApiException e) {
             showErrorMessage(e.getMessage(), false);
         }

@@ -2,12 +2,12 @@ package org.jetbrains.hackathon.ar;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.widget.Toast;
 import com.maxmpz.poweramp.player.PowerampAPI;
 import org.geometerplus.android.fbreader.api.ApiClientImplementation;
-import org.geometerplus.android.fbreader.api.ApiException;
-import org.geometerplus.android.fbreader.api.TextPosition;
 
 public class NavigateToAudioAction extends Activity implements ApiClientImplementation.ConnectionListener {
     private ApiClientImplementation myApi;
@@ -35,12 +35,10 @@ public class NavigateToAudioAction extends Activity implements ApiClientImplemen
 
     public void onConnected() {
         System.out.println("to audio pressed");
-        try {
-            myApi.setPageStart(new TextPosition(55, 0, 0));
-            startService(new Intent(PowerampAPI.ACTION_API_COMMAND).putExtra(PowerampAPI.COMMAND, PowerampAPI.Commands.TOGGLE_PLAY_PAUSE));
-        } catch (ApiException e) {
-            showErrorMessage(e.getMessage(), false);
-        }
+        startService(new Intent(PowerampAPI.ACTION_API_COMMAND)
+                .putExtra(PowerampAPI.COMMAND, PowerampAPI.Commands.OPEN_TO_PLAY)
+                .putExtra(PowerampAPI.Track.POSITION, 30)
+                .setData(Uri.parse("file://" + Environment.getExternalStorageDirectory() + "/eBooks/_120.flac")));
     }
 
     private void showErrorMessage(final CharSequence text, final boolean fatal) {
