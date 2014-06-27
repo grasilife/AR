@@ -20,7 +20,7 @@ public class NavigateFromAudioAction extends Activity implements ApiClientImplem
 
         myApi = new ApiClientImplementation(this, this);
 
-        finish();
+//        finish();
     }
 
     @Override
@@ -37,17 +37,27 @@ public class NavigateFromAudioAction extends Activity implements ApiClientImplem
 
     public void onConnected() {
         System.out.println("from audio pressed");
-        Intent intent = new Intent(getApplicationContext(), PowerampActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getApplicationContext().startActivity(intent);
+        Intent intent = new Intent(NavigateFromAudioAction.this, PowerampActivity.class);
+//        Intent intent = new Intent(getApplicationContext(), PowerampActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        getApplicationContext().startActivity(intent);
+        startActivityForResult(intent, 1);
         try {
-            myApi.setPageStart(new TextPosition(100, 0, 0));
             startService(new Intent(PowerampAPI.ACTION_API_COMMAND)
                     .putExtra(PowerampAPI.COMMAND, PowerampAPI.Commands.PAUSE));
+            myApi.setPageStart(new TextPosition(140, 0, 0));
 
         } catch (ApiException e) {
             showErrorMessage(e.getMessage(), false);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("requested code: " + requestCode);
+        System.out.println("result code: " + requestCode);
+        System.out.println(data.getIntExtra("MY-POSITION", -42));
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void showErrorMessage(final CharSequence text, final boolean fatal) {
@@ -59,6 +69,12 @@ public class NavigateFromAudioAction extends Activity implements ApiClientImplem
                 Toast.makeText(NavigateFromAudioAction.this, text, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        getApplicationContext().unbindService(myApi);
     }
 }
 

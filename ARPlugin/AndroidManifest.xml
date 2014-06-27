@@ -27,13 +27,13 @@
             </intent-filter>
         </activity>
 
-        <service android:name="org.jetbrains.hackathon.ar.PowerampListener" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.NoDisplay">
-            <intent-filter>
-                <action android:name="android.fbreader.action.plugin.RUN" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:host="data.ar.org" android:scheme="http" android:path="/plugin/ar/poweramp/listen" />
-            </intent-filter>
-        </service>
+        <!--<service android:name="org.jetbrains.hackathon.ar.PowerampListener" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.NoDisplay">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.fbreader.action.plugin.RUN" />-->
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <!--<data android:host="data.ar.org" android:scheme="http" android:path="/plugin/ar/poweramp/listen" />-->
+            <!--</intent-filter>-->
+        <!--</service>-->
 
         <activity android:name="org.jetbrains.hackathon.ar.PowerampActivity" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>

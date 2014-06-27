@@ -87,12 +87,13 @@ public class PowerampActivity extends Activity implements RemoteTrackTime.TrackT
 
     private void processTrackIntent() {
 
-        System.out.println(mCurrentTrack.getInt(PowerampAPI.Track.POSITION));
         mCurrentTrack = null;
 
         if (mTrackIntent != null) {
             mCurrentTrack = mTrackIntent.getBundleExtra(PowerampAPI.TRACK);
             if (mCurrentTrack != null) {
+                System.out.println("position: " + mCurrentTrack.getInt(PowerampAPI.Track.POSITION));
+
                 int duration = mCurrentTrack.getInt(PowerampAPI.Track.DURATION);
                 mRemoteTrackTime.updateTrackDuration(duration); // Let ReomoteTrackTime know about current song duration.
             }
@@ -145,13 +146,23 @@ public class PowerampActivity extends Activity implements RemoteTrackTime.TrackT
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     public void onTrackDurationChanged(int duration) {
-        System.out.println("duration changed");
+        System.out.println("activity: duration changed");
     }
 
     @Override
     public void onTrackPositionChanged(int position) {
-        System.out.println("position changed: " + position + mCurrentTrack);
+        System.out.println("activity: position changed1: " + position + " " + mCurrentTrack);
+
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("MY-POSITION", position);
+        setResult(Activity.RESULT_OK, resultIntent);
+        finish();
     }
 }
 

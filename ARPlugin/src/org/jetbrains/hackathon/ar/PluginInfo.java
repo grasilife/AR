@@ -38,7 +38,7 @@ public class PluginInfo extends PluginApi.PluginInfo {
     protected List<PluginApi.ActionInfo> implementedActions(Context context) {
         System.out.println("started");
 
-        Intent intent = new Intent(context, PowerampListener.class);
+//        Intent intent = new Intent(context, PowerampListener.class);
 //        ComponentName componentName = context.startService(intent);
 //        System.out.println("service " + componentName);
 
