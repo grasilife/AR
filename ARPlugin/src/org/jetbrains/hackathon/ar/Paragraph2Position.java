@@ -13,4 +13,16 @@ public class Paragraph2Position {
         this.paragraphNumber = paragraphNumber;
         this.audioPosition = audioPosition;
     }
+
+    public String getAudioFileName() {
+        return audioFileName;
+    }
+
+    public int getParagraphNumber() {
+        return paragraphNumber;
+    }
+
+    public int getAudioPosition() {
+        return audioPosition;
+    }
 }

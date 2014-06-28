@@ -16,7 +16,7 @@
             <intent-filter>
             <action android:name="android.fbreader.action.plugin.RUN" />
             <category android:name="android.intent.category.DEFAULT" />
-            <!--<data android:host="data.ar.org" android:scheme="http" android:path="/plugin/ar/" />-->
+                <data android:host="data.ar.org" android:scheme="http" android:path="/plugin/ar/add/audio" />
             </intent-filter>
         </activity>
         <activity android:name="org.jetbrains.hackathon.ar.NavigateFromAudioAction" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.NoDisplay">
@@ -49,5 +49,6 @@
                 <data android:host="data.ar.org" android:scheme="http" android:path="/plugin/ar/navigate/to/audio" />
             </intent-filter>
         </activity>
+        <activity android:name="ar.com.daidalos.afiledialog.FileChooserActivity" />
     </application>
 </manifest>

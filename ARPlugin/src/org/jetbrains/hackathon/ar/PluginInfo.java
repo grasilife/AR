@@ -37,28 +37,25 @@ public class PluginInfo extends PluginApi.PluginInfo {
     @Override
     protected List<PluginApi.ActionInfo> implementedActions(Context context) {
         System.out.println("started");
-
-//        Intent intent = new Intent(context, PowerampListener.class);
-//        ComponentName componentName = context.startService(intent);
-//        System.out.println("service " + componentName);
-
-
         List<PluginApi.ActionInfo> actions = new ArrayList<PluginApi.ActionInfo>(2);
-        actions.add(new PluginApi.MenuActionInfo(
-                Uri.parse("http://data.ar.org/plugin/ar/add/audio"),
-                "Add audio files",
-                Integer.MAX_VALUE
-        ));
-        actions.add(new PluginApi.MenuActionInfo(
-                Uri.parse("http://data.ar.org/plugin/ar/navigate/to/audio"),
-                "Navigate to audio",
-                Integer.MAX_VALUE
-        ));
-        actions.add(new PluginApi.MenuActionInfo(
-                Uri.parse("http://data.ar.org/plugin/ar/navigate/from/audio"),
-                "Navigate from audio",
-                Integer.MAX_VALUE
-        ));
+
+            actions.add(new PluginApi.MenuActionInfo(
+                    Uri.parse("http://data.ar.org/plugin/ar/add/audio"),
+                    "Add audio files",
+                    Integer.MAX_VALUE
+            ));
+
+            actions.add(new PluginApi.MenuActionInfo(
+                    Uri.parse("http://data.ar.org/plugin/ar/navigate/to/audio"),
+                    "Navigate to audio",
+                    Integer.MAX_VALUE
+            ));
+            actions.add(new PluginApi.MenuActionInfo(
+                    Uri.parse("http://data.ar.org/plugin/ar/navigate/from/audio"),
+                    "Navigate from audio",
+                    Integer.MAX_VALUE
+            ));
+        //    instance.setUpdated(true);
 
         return actions;
     }

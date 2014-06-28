@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AR.iml" filepath="$PROJECT_DIR$/AR.iml" />
       <module fileurl="file://$PROJECT_DIR$/ARPlugin/ARPlugin.iml" filepath="$PROJECT_DIR$/ARPlugin/ARPlugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aFileDialog/aFileDialog.iml" filepath="$PROJECT_DIR$/aFileDialog/aFileDialog.iml" />
     </modules>
   </component>
 </project>

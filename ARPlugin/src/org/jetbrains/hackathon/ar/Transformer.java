@@ -15,6 +15,8 @@ import java.util.List;
 public class Transformer {
     private static Transformer instance;
     private List<Paragraph2Position> myItems = new LinkedList<Paragraph2Position>();
+    private boolean myLoaded = false;
+    private boolean myUpdated;
 
     //new TextPosition(140, 0, 0)
     void load(String path){
@@ -36,6 +38,7 @@ public class Transformer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        myLoaded = true;
     }
 
     private void loadChunkFromLine(String line) {
@@ -44,7 +47,15 @@ public class Transformer {
     }
 
     public TextPosition getTextPosition(int audioPosition, String fileName){
-        return new TextPosition(150, 0, 0);
+        TextPosition textPosition = null;
+        for( Paragraph2Position par : myItems){
+            if(par.getAudioFileName().equals(fileName))
+                if(audioPosition > par.getAudioPosition())
+                    textPosition = new TextPosition(par.getParagraphNumber(), 0, 0);
+                if(audioPosition < par.getAudioPosition())
+                    break;
+        }
+        return textPosition;
     }
 
     public int getAudioPosition(TextPosition textPosition, String fileName){
@@ -57,5 +68,17 @@ public class Transformer {
 
     public Uri getAudioPath() {
         return Uri.parse("file://" + Environment.getExternalStorageDirectory() + "/eBooks/_120.flac");
+    }
+
+    public boolean isLoaded() {
+        return myLoaded;
+    }
+
+    public boolean isUpdated() {
+        return myUpdated;
+    }
+
+    public void setUpdated(boolean myUpdated) {
+        this.myUpdated = myUpdated;
     }
 }

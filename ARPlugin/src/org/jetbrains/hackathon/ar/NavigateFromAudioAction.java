@@ -45,11 +45,19 @@ public class NavigateFromAudioAction extends Activity implements ApiClientImplem
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.out.println("requested code: " + requestCode);
         System.out.println("result code: " + requestCode);
-        System.out.println(data.getIntExtra("MY-POSITION", -42));
+        int intExtra = data.getIntExtra("MY-POSITION", -42);
+        System.out.println(intExtra);
         try {
-            startService(new Intent(PowerampAPI.ACTION_API_COMMAND)
-                    .putExtra(PowerampAPI.COMMAND, PowerampAPI.Commands.PAUSE));
-            myApi.setPageStart(Transformer.getInstance().getTextPosition(data.getIntExtra("MY-POSITION", -42), data.getStringExtra("MY-NAME")));
+            Intent service = new Intent(PowerampAPI.ACTION_API_COMMAND)
+                    .putExtra(PowerampAPI.COMMAND, PowerampAPI.Commands.PAUSE);
+            startService(service);
+            String stringExtra = data.getStringExtra("MY-NAME");
+            TextPosition textPosition = Transformer.getInstance().getTextPosition(intExtra, stringExtra);
+            if(textPosition == null)
+                Toast.makeText(NavigateFromAudioAction.this, "Not loaded " + intExtra + " " + stringExtra, Toast.LENGTH_SHORT).show();
+            else
+                myApi.setPageStart(textPosition);
+            stopService(service);
 
         } catch (ApiException e) {
             showErrorMessage(e.getMessage(), false);
