@@ -44,11 +44,11 @@ public class Transformer {
     }
 
     public TextPosition getTextPosition(int audioPosition, String fileName){
-        return null;
+        return new TextPosition(150, 0, 0);
     }
 
     public int getAudioPosition(TextPosition textPosition, String fileName){
-        return 0;
+        return 25;
     }
 
     public static Transformer getInstance() {

@@ -71,7 +71,7 @@ public class NavigateFromAudioAction extends Activity implements ApiClientImplem
     @Override
     protected void onStop() {
         super.onStop();
-        finish();
+//        finish();
     }
 }
 

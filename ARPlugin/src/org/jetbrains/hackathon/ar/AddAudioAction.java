@@ -2,20 +2,15 @@ package org.jetbrains.hackathon.ar;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.widget.Toast;
 import ar.com.daidalos.afiledialog.FileChooserDialog;
-import com.maxmpz.poweramp.player.PowerampAPI;
 import org.geometerplus.android.fbreader.api.ApiClientImplementation;
-
 import java.io.File;
 
 public class AddAudioAction extends Activity implements ApiClientImplementation.ConnectionListener {
     private ApiClientImplementation myApi;
-
+    private boolean isLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +18,12 @@ public class AddAudioAction extends Activity implements ApiClientImplementation.
 
         myApi = new ApiClientImplementation(this, this);
 
-        finish();
+//        finish();
     }
 
     @Override
     protected void onResume() {
+        isLoaded = true;
         myApi.connect();
         super.onResume();
     }
@@ -36,9 +32,19 @@ public class AddAudioAction extends Activity implements ApiClientImplementation.
     protected void onDestroy() {
         myApi.disconnect();
         super.onDestroy();
+
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        finish();
     }
 
     public void onConnected() {
+        //if(!isLoaded) return;
+
         FileChooserDialog dialog = new FileChooserDialog(AddAudioAction.this);
         dialog.addListener(AddAudioAction.this.onFileSelectedListener);
         dialog.setFilter(".*arg");

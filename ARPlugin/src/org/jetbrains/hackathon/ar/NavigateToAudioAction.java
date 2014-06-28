@@ -12,6 +12,7 @@ import org.geometerplus.android.fbreader.api.ApiException;
 
 public class NavigateToAudioAction extends Activity implements ApiClientImplementation.ConnectionListener {
     private ApiClientImplementation myApi;
+    private boolean isLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,12 +20,18 @@ public class NavigateToAudioAction extends Activity implements ApiClientImplemen
 
         myApi = new ApiClientImplementation(this, this);
 
-        finish();
+//        finish();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        finish();
     }
 
     @Override
     protected void onResume() {
         myApi.connect();
+        isLoaded = true;
         super.onResume();
     }
 
@@ -35,6 +42,7 @@ public class NavigateToAudioAction extends Activity implements ApiClientImplemen
     }
 
     public void onConnected() {
+
         System.out.println("to audio pressed");
         try {
             startService(new Intent(PowerampAPI.ACTION_API_COMMAND)

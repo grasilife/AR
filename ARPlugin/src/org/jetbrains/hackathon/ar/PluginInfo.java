@@ -45,6 +45,11 @@ public class PluginInfo extends PluginApi.PluginInfo {
 
         List<PluginApi.ActionInfo> actions = new ArrayList<PluginApi.ActionInfo>(2);
         actions.add(new PluginApi.MenuActionInfo(
+                Uri.parse("http://data.ar.org/plugin/ar/add/audio"),
+                "Add audio files",
+                Integer.MAX_VALUE
+        ));
+        actions.add(new PluginApi.MenuActionInfo(
                 Uri.parse("http://data.ar.org/plugin/ar/navigate/to/audio"),
                 "Navigate to audio",
                 Integer.MAX_VALUE
