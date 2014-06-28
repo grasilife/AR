@@ -26,7 +26,13 @@
                 <data android:host="data.ar.org" android:scheme="http" android:path="/plugin/ar/navigate/to/audio" />
             </intent-filter>
         </activity>
-
+        <activity android:name="org.jetbrains.hackathon.ar.AddAudioAction" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.NoDisplay">
+            <intent-filter>
+                <action android:name="android.fbreader.action.plugin.RUN" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:host="data.ar.org" android:scheme="http" android:path="/plugin/ar/add/audio" />
+            </intent-filter>
+        </activity>
         <!--<service android:name="org.jetbrains.hackathon.ar.PowerampListener" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.NoDisplay">-->
             <!--<intent-filter>-->
                 <!--<action android:name="android.fbreader.action.plugin.RUN" />-->
