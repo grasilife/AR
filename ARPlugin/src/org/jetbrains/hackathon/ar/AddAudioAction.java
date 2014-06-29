@@ -62,9 +62,9 @@ public class AddAudioAction extends Activity implements ApiClientImplementation.
         dialog.show();*/
 
         Intent intent = new Intent(this, FileChooserActivity.class);
-        intent.putExtra(FileChooserActivity.INPUT_REGEX_FILTER, ".*arg");
+        intent.putExtra(FileChooserActivity.INPUT_FOLDER_MODE, true);
         intent.putExtra(FileChooserActivity.INPUT_CAN_CREATE_FILES, false);
-       // this.startActivityForResult(intent, 0);
+        this.startActivityForResult(intent, 0);
 
       /*  startService(new Intent(PowerampAPI.ACTION_API_COMMAND)
                 .putExtra(PowerampAPI.COMMAND, PowerampAPI.Commands.OPEN_TO_PLAY)
@@ -85,8 +85,13 @@ public class AddAudioAction extends Activity implements ApiClientImplementation.
         Bundle bundle = data.getExtras();
         File file = (File) bundle.get(FileChooserActivity.OUTPUT_FILE_OBJECT);
 
-       /* Transformer.getInstance().load(file.getPath());
-        Toast.makeText(AddAudioAction.this, "Loaded successfully", Toast.LENGTH_SHORT).show();*/
+        Transformer instance = Transformer.getInstance();
+        instance.load(file.getPath());
+        if(instance.isLoaded())
+            Toast.makeText(AddAudioAction.this, "Loaded successfully", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(AddAudioAction.this, "Wasn't Loaded successfully", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
 

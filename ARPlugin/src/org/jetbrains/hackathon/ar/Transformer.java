@@ -17,6 +17,7 @@ public class Transformer {
     private List<Paragraph2Position> myItems = new LinkedList<Paragraph2Position>();
     private boolean myLoaded = false;
     private boolean myUpdated;
+    private String myPath2Music;
 
     //new TextPosition(140, 0, 0)
     void load(String path){
@@ -24,8 +25,17 @@ public class Transformer {
             InputStream fis;
             BufferedReader br;
             String         line;
+            File file = new File(path);
+            myPath2Music = path;
+            File[] formatFiles = file.listFiles(new FileFilter() {
+                @Override
+                public boolean accept(File pathname) {
+                    return pathname.getPath().endsWith(".rl");
+                }
+            });
+            if(formatFiles.length != 1) return;
 
-            fis = new FileInputStream(path);
+            fis = new FileInputStream(formatFiles[0]);
             br = new BufferedReader(new InputStreamReader(fis, Charset.forName("UTF-8")));
             while ((line = br.readLine()) != null) {
                 loadChunkFromLine(line);
@@ -43,31 +53,39 @@ public class Transformer {
 
     private void loadChunkFromLine(String line) {
         String[] chunks = line.split(":");
-        myItems.add(new Paragraph2Position(chunks[0], Integer.valueOf(chunks[1]), Integer.valueOf(chunks[2])));
+        if(chunks.length != 3) return;
+        myItems.add(new Paragraph2Position(chunks[0], Integer.valueOf(chunks[2]), Integer.valueOf(chunks[1])));
     }
 
     public TextPosition getTextPosition(int audioPosition, String fileName){
         TextPosition textPosition = null;
         for( Paragraph2Position par : myItems){
-            if(par.getAudioFileName().equals(fileName))
-                if(audioPosition > par.getAudioPosition())
+            if(fileName.endsWith(par.getAudioFileName()))
+                if(audioPosition > par.getSeconds())
                     textPosition = new TextPosition(par.getParagraphNumber(), 0, 0);
-                if(audioPosition < par.getAudioPosition())
+                if(audioPosition < par.getSeconds())
                     break;
         }
         return textPosition;
     }
 
-    public int getAudioPosition(TextPosition textPosition, String fileName){
-        return 25;
+    public AudioPosition getAudioPosition(TextPosition textPosition, String fileName){
+        AudioPosition audioPosition = null;
+        for( Paragraph2Position par : myItems){
+                if(textPosition.ParagraphIndex > par.getParagraphNumber())
+                    audioPosition = par.getAudioPosition();
+            if(textPosition.ParagraphIndex < par.getParagraphNumber())
+                break;
+        }
+        return audioPosition;
     }
 
     public static Transformer getInstance() {
         return (instance != null) ? instance : (instance = new Transformer());
     }
 
-    public Uri getAudioPath() {
-        return Uri.parse("file://" + Environment.getExternalStorageDirectory() + "/eBooks/_120.flac");
+    public Uri getAudioPath(AudioPosition audioPosition) {
+        return Uri.parse("file://" +myPath2Music + "/" + audioPosition.getFilePath());
     }
 
     public boolean isLoaded() {

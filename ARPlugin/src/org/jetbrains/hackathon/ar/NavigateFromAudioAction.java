@@ -19,7 +19,11 @@ public class NavigateFromAudioAction extends Activity implements ApiClientImplem
         super.onCreate(savedInstanceState);
 
         myApi = new ApiClientImplementation(this, this);
-
+        Transformer instance = Transformer.getInstance();
+        if(!instance.isLoaded())
+        {
+            finish();
+        }
     }
 
     @Override
@@ -53,16 +57,24 @@ public class NavigateFromAudioAction extends Activity implements ApiClientImplem
             startService(service);
             String stringExtra = data.getStringExtra("MY-NAME");
             TextPosition textPosition = Transformer.getInstance().getTextPosition(intExtra, stringExtra);
+            
             if(textPosition == null)
                 Toast.makeText(NavigateFromAudioAction.this, "Not loaded " + intExtra + " " + stringExtra, Toast.LENGTH_SHORT).show();
             else
+            {
                 myApi.setPageStart(textPosition);
+                myApi.highlightArea(textPosition, new TextPosition(textPosition.ParagraphIndex + 1, 0, 0));
+
+               // myApi.highlightArea(textPosition, textPosition);
+            }
             stopService(service);
 
         } catch (ApiException e) {
             showErrorMessage(e.getMessage(), false);
+            finish();
         }
         super.onActivityResult(requestCode, resultCode, data);
+        finish();
     }
 
     private void showErrorMessage(final CharSequence text, final boolean fatal) {

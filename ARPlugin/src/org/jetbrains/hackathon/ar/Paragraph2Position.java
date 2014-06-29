@@ -4,25 +4,27 @@ package org.jetbrains.hackathon.ar;
  * Created by Fearfall on 28.06.2014.
  */
 public class Paragraph2Position {
-    private String audioFileName = "";
     private int paragraphNumber;
-    private int audioPosition;
+    private AudioPosition audioPosition;
 
     public Paragraph2Position(String audioFileName, int paragraphNumber, int audioPosition) {
-        this.audioFileName = audioFileName;
         this.paragraphNumber = paragraphNumber;
-        this.audioPosition = audioPosition;
+        this.audioPosition = new AudioPosition(audioPosition, audioFileName);
     }
 
     public String getAudioFileName() {
-        return audioFileName;
+        return audioPosition.getFilePath();
     }
 
     public int getParagraphNumber() {
         return paragraphNumber;
     }
 
-    public int getAudioPosition() {
+    public int getSeconds() {
+        return audioPosition.getSecondsNumber();
+    }
+
+    public AudioPosition getAudioPosition() {
         return audioPosition;
     }
 }

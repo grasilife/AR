@@ -163,7 +163,7 @@ public class PowerampActivity extends Activity implements RemoteTrackTime.TrackT
         resultIntent.putExtra("MY-POSITION", position);
         resultIntent.putExtra("MY-NAME", mCurrentTrack.getString(PowerampAPI.Track.PATH));
         setResult(Activity.RESULT_OK, resultIntent);
-        //finish();
+        finish();
     }
 }
 
